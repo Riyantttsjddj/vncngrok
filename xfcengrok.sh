@@ -7,7 +7,7 @@ NGROK_TOKEN="1rhrziKSSbVXG9AqYLBvQFwD1CL_538mPmakKPzrn2jiYHRWX"
 
 # 1️⃣ Update & Install XFCE, VNC Server, dan dependensi
 echo "🛠️ Menginstal XFCE Desktop dan VNC Server..."
-apt update -y && apt install -y xfce4 xfce4-goodies tightvncserver dbus-x11 wget unzip curl jq
+apt update -y && apt install -y xfce4 xfce4-goodies tightvncserver dbus-x11 wget unzip curl jq sudo
 
 # 2️⃣ Install Browser (Google Chrome & Firefox)
 echo "🌍 Menginstal Google Chrome dan Firefox..."
@@ -16,9 +16,9 @@ wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
 echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list
 apt update -y && apt install -y google-chrome-stable
 
-# 3️⃣ Tambahkan user baru untuk VNC
+# 3️⃣ Tambahkan user baru untuk VNC (Superuser dengan Password)
 echo "👤 Menambahkan user VNC: $VNC_USER..."
-useradd -m $VNC_USER || echo "User $VNC_USER sudah ada"
+useradd -m -G sudo $VNC_USER || echo "User $VNC_USER sudah ada"
 echo "$VNC_USER:$VNC_PASS" | chpasswd
 
 # 4️⃣ Konfigurasi VNC Server
@@ -61,7 +61,7 @@ NGROK_URL=$(curl -s http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].publi
 if [ -n "$NGROK_URL" ]; then
     echo "✅ VNC Server berjalan!"
     echo "📌 Akses VNC di: $NGROK_URL"
-    echo "👤 Username: $VNC_USER"
+    echo "👤 Username: $VNC_USER (SUPERUSER dengan password)"
     echo "🔑 Password: $VNC_PASS"
     echo "🖥️ Desktop: XFCE"
     echo "🌍 Browser: Google Chrome & Firefox sudah terinstal"
