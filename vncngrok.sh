@@ -25,7 +25,7 @@ chmod +x ngrok
 mv ngrok /usr/local/bin/
 
 # 6️⃣ Login ke Ngrok (Ganti dengan token Anda)
-ngrok authtoken YOUR_NGROK_AUTH_TOKEN
+ngrok config add-authtoken 1rhrziKSSbVXG9AqYLBvQFwD1CL_538mPmakKPzrn2jiYHRWX
 
 # 7️⃣ Jalankan Ngrok untuk VNC (Port 5901)
 nohup ngrok tcp 5901 > /dev/null 2>&1 &
